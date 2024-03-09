@@ -1,0 +1,29 @@
+.header {
+  padding-block: 1.5rem;
+  .container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .search-btn {
+    display: none;
+  }
+}
+
+.logo {
+  width: 15rem;
+}
+
+@media (min-width: 756px) {
+  .header {
+    .container {
+      flex-direction: row;
+    }
+    .search-btn {
+      display: block;
+    }
+  }
+}

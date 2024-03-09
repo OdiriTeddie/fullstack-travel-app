@@ -1,0 +1,64 @@
+.hero-section {
+  background-image: url("../../assets/travel1.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  min-height: 87vh;
+
+  display: flex;
+  align-items: center;
+
+  .container {
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+}
+
+.hero-content {
+  max-width: 40rem;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2rem;
+
+  h1 {
+    font-size: 3.5rem;
+  }
+}
+
+.hero-booking {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+
+  svg {
+    font-size: 3rem;
+  }
+}
+
+@media (min-width: 756px) {
+  .hero-content {
+    max-width: 40rem;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2rem;
+
+    h1 {
+      font-size: 5rem;
+    }
+  }
+
+  .hero-booking {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+
+    svg {
+      font-size: 3rem;
+    }
+  }
+}

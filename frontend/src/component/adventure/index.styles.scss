@@ -1,0 +1,82 @@
+.adventure {
+  padding-block: 7rem;
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+  }
+}
+
+.adventure__header {
+  display: flex;
+  flex-direction: column;
+  gap: 1.3rem;
+
+  h2 {
+    font-size: 3rem;
+    line-height: 1.2;
+  }
+
+  p {
+    font-size: 1.2rem;
+  }
+
+  .subheading {
+    font-family: "Satisfy", cursive;
+    font-size: 1.8rem;
+    color: #06a6e3;
+  }
+}
+
+.adventure__destination_box {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.adventure__destination {
+  background-image: url("../../assets/destination1.jpg");
+  background-size: cover;
+  max-width: 25rem;
+  height: 23rem;
+  color: #fff;
+  border-radius: 15px;
+
+  &_overlay {
+    padding: 1rem;
+    background-color: #00000055;
+    height: 100%;
+    border-radius: 15px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.destination2 {
+  background-image: url("../../assets/destination2.jpg");
+}
+.destination3 {
+  background-image: url("../../assets/destination3.jpg");
+}
+.destination4 {
+  background-image: url("../../assets/destination4.jpeg");
+}
+
+@media (min-width: 756px) {
+  .adventure__destination_box {
+    flex-direction: row;
+  }
+
+  .adventure__header {
+    max-width: 45rem;
+
+    h2 {
+      font-size: 3.3rem;
+      line-height: 1.2;
+    }
+  }
+}

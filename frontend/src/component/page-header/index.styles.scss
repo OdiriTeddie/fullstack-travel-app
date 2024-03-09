@@ -1,0 +1,31 @@
+.page-header {
+    background-image: url("../../assets/contact-page-header.jpg");
+    background-position: center center;
+    padding-block: 11rem;
+    position: relative;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    color: #fff;
+
+    &__overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: #00000080;
+        width: 100%;
+        height: 100%;
+    }
+
+    &__content {
+        z-index: 1000;
+        font-size: 2rem;
+        font-weight: 700;
+    }
+
+    @media(min-width: 756px) {
+        &__content {
+            font-size: 3rem;
+        }
+    }
+}
