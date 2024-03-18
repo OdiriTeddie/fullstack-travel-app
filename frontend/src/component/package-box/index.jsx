@@ -24,7 +24,7 @@ export const PackageBox = ({ image, city, country, summary, price }) => {
             Details
           </Link>
           <div className="travel-box__quote">
-            From<span>{price}</span>
+            From<span>$ {price}</span>
           </div>
         </div>
       </div>
@@ -37,5 +37,5 @@ PackageBox.propTypes = {
   city: PropTypes.string,
   country: PropTypes.string,
   summary: PropTypes.string,
-  price: PropTypes.number,
+  price: PropTypes.string,
 };

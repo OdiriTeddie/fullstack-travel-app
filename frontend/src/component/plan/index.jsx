@@ -1,8 +1,48 @@
 import "./index.styles.scss";
 import { Link } from "react-router-dom";
 import { PackageBox } from "../package-box";
+import { useLoaderData } from "react-router-dom";
+import { customFetch } from "../../utils";
+
+export const loader = async () => {
+  try {
+    const response = await customFetch.get("/packages");
+    const packages = response.data.travelPackages;
+    return { packages };
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
 
 export const PlanTrip = () => {
+  const { packages } = useLoaderData();
+
+  const limitedList = packages.slice(0, 3);
+
+  const mappedPackages = limitedList?.map((travelPackage) => {
+    const {
+      name,
+      duration,
+      image,
+      shortDescription,
+      price,
+      country,
+      _id: id,
+    } = travelPackage;
+    return (
+      <PackageBox
+        key={id}
+        city={name}
+        duration={duration}
+        country={country}
+        price={price}
+        summary={shortDescription}
+        image={image}
+        links={`/packages/${name}`}
+      />
+    );
+  });
   return (
     <section className="plan-trip">
       <div className="container">
@@ -25,34 +65,7 @@ export const PlanTrip = () => {
           </div>
         </div>
 
-        <div className="travel-list">
-          <PackageBox
-            image="./images/trave1.jpg"
-            city="Toscany"
-            country="Italy"
-            summary="Whether you are looking for a romantic tour, Tuscany is the
-                  perfect destination for a true Italian experience."
-            price="$450"
-          />
-
-          <PackageBox
-            image="./images/tokyo.jpg"
-            city="Tokyo"
-            country="Japan"
-            summary="Experience the alluring beauty and bustling energy of Tokyo
-            through our immersive tour with a good guide."
-            price="$790"
-          />
-
-          <PackageBox
-            image="./images/tokyo.jpg"
-            city="Miami"
-            country="USA"
-            summary="This iconic landmark is home to an array of thrilling good
-            attractions and stunning fresh ocean views."
-            price="$700"
-          />
-        </div>
+        <div className="travel-list">{mappedPackages}</div>
       </div>
     </section>
   );

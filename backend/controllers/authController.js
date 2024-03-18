@@ -16,8 +16,6 @@ const login = async (req, res) => {
 
   const user = await User.findOne({ email });
 
-  console.log(user);
-
   if (!user) {
     throw new Error("no User");
   }
@@ -30,9 +28,9 @@ const login = async (req, res) => {
 
   const token = user.createJWT();
 
-  res.status(StatusCodes.OK).json({ user: { name: user.name }, token });
-
-  res.send("login");
+  res
+    .status(StatusCodes.OK)
+    .json({ user: { name: user.name, id: user._id }, token });
 };
 
 module.exports = { register, login };

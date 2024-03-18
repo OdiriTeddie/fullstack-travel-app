@@ -6,46 +6,69 @@ import { FaClock } from "react-icons/fa";
 import { PiLadderSimple } from "react-icons/pi";
 import { IoMdCheckmark } from "react-icons/io";
 import { IoCloseSharp } from "react-icons/io5";
-import { useParams } from "react-router-dom";
-import { useState } from "react";
+import { Form, Link, redirect, useLoaderData } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { customFetch } from "../../utils";
+import { getPackage } from "../../features/travelPackages/travelPackagesSlice";
+import { toast } from "react-toastify";
 
-export default function PackageSingle() {
-  const countryData = {
-    Italy: ["florence", "toscany"],
-    Japan: ["tokyo", "kyoto"],
-    Egypt: ["nile", "cairo"],
-    France: ["paris"],
-    Greece: ["athens", "rome"],
-    USA: ["miami"],
+export const loader = async ({ params }) => {
+  const response = await customFetch(`/packages/${params.packageName}`);
+  const singlePackage = response.data.travelPackage;
+
+  return { singlePackage };
+};
+
+export const action =
+  (store) =>
+  async ({ request }) => {
+    const formData = await request.formData();
+    const data = Object.fromEntries(formData);
+
+    const { date, msg } = data;
+    const userId = store.getState().userState.user.id;
+    const token = store.getState().userState.user.token;
+    console.log(token);
+    const packageId = store.getState().packageState.singlePackage._id;
+
+    const selectedPackageData = { userId, packageId, date, msg };
+
+    try {
+      const response = await customFetch.post(
+        "/selected-packages",
+        selectedPackageData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      toast.success("Travel Package booked successfully");
+      return redirect("/dashboard");
+    } catch (error) {
+      toast.error("Login and Try again");
+    }
+
+    return null;
   };
 
-  const [wasSubmitted, setWasSubmitted] = useState(false);
-  const [touristName, setTouristName] = useState("");
+export default function PackageSingle() {
+  const user = useSelector((state) => state.userState.user);
+  const dispatch = useDispatch();
+  const { singlePackage } = useLoaderData();
 
-  let params = useParams();
-  let locations = Object.values(params);
-  let location = locations[0];
-  let place = `${location.at(0).toUpperCase()}${location.slice(1)} `;
+  const {
+    name,
+    duration,
+    longDescription,
+    price,
+    minAge,
+    difficulty,
+    _id: id,
+  } = singlePackage;
 
-  function displayName() {
-    let displayCountry;
-    for (let country in countryData) {
-      const cities = countryData[country];
-
-      if (cities.includes(location)) {
-        displayCountry = country;
-      }
-    }
-    return displayCountry;
-  }
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    const fieldValues = Object.fromEntries(formData.entries());
-
-    setWasSubmitted(true);
-    setTouristName(fieldValues.name);
+  const handleSubmit = () => {
+    dispatch(getPackage(singlePackage));
   };
 
   return (
@@ -57,9 +80,9 @@ export default function PackageSingle() {
         <div className="package-single__header">
           <div className="container">
             <div className="package-single__location">
-              <h1>{place}</h1>
+              <h1>{name}</h1>
               <div className="package-single__location_locator">
-                <FaLocationDot /> {displayName()}
+                <FaLocationDot />
               </div>
             </div>
             <div>
@@ -70,7 +93,7 @@ export default function PackageSingle() {
                   </div>
                   <div className="highlight__single_details">
                     <h4>Durations</h4>
-                    <p>5 Days</p>
+                    <p> {duration} </p>
                   </div>
                 </div>
                 <div className="highlight__single">
@@ -79,7 +102,7 @@ export default function PackageSingle() {
                   </div>
                   <div className="highlight__single_details">
                     <h4>Difficulty</h4>
-                    <p>Medium</p>
+                    <p> {difficulty} </p>
                   </div>
                 </div>
                 <div className="highlight__single">
@@ -88,7 +111,7 @@ export default function PackageSingle() {
                   </div>
                   <div className="highlight__single_details">
                     <h4>Min Age</h4>
-                    <p>5</p>
+                    <p> {minAge} </p>
                   </div>
                 </div>
               </div>
@@ -100,32 +123,7 @@ export default function PackageSingle() {
         <div>
           <div className="main-content__details">
             <h2>Enjoy the Adventure</h2>
-            <p>
-              Are you looking for an adventure of a lifetime? Join us on an
-              unforgettable journey through some of the world is most stunning
-              landscapes and cultural destinations. Our expertly curated tours
-              take you to incredible destinations, from the rugged mountains of
-              Patagonia to the vibrant cities of Asia. Our itineraries are
-              designed to immerse you in the local culture, with opportunities
-              to meet locals, try new foods, and learn about the history and
-              traditions of each destination. Our experienced guides will lead
-              you through each destination, sharing their knowledge and passion
-              for travel. We offer a range of activities to suit every traveler,
-              from hiking and kayaking to cultural tours and culinary
-              experiences.
-            </p>
-            <p>
-              {" "}
-              Our accommodations are carefully selected for comfort and
-              convenience, with options to suit every budget. Whether you prefer
-              luxurious hotels or cozy homestays, we have something for
-              everyone. At every step of the journey, we prioritize
-              sustainability and responsible tourism. We work with local
-              communities to ensure that our tours have a positive impact on the
-              environment and the people we meet along the way. Join us on a
-              journey of discovery and exploration, and discover the world is
-              most incredible destinations with us.
-            </p>
+            <p>{longDescription}</p>
           </div>
           <div className="main-content__options">
             <h2>Included/Excluded</h2>
@@ -212,60 +210,45 @@ export default function PackageSingle() {
           </div>
         </div>
         <div className="sidebar">
-          <form className="booking-form" onSubmit={handleSubmit}>
+          <Form className="booking-form" method="POST">
             <div className="booking-form__quote">
               <div className="booking-form__range">
                 Price <span>From</span>
               </div>
-              <div className="booking-form__price">$ 789</div>
+              <div className="booking-form__price">$ {price}</div>
             </div>
             <div className="booking-form__title">
               <p>Booking ID: </p>
               <div className="booking-form__title_divide"></div>
-              <p className="id">4828</p>
+              <p className="id"> {id.slice(0, 6)} </p>
             </div>
             <div className="formgroup">
-              <input type="date" required />
+              <input type="date" required name="date" />
             </div>
-            <div className="formgroup">
-              <input
-                type="text"
-                placeholder="Type your name and surname"
-                name="name"
-                required
-              />
-            </div>
-            <div className="formgroup">
-              <input
-                type="email"
-                placeholder="Insert your email"
-                name="email"
-                required
-              />
-            </div>
+            <div className="formgroup"></div>
             <div className="formgroup">
               <textarea
                 rows="3"
-                name="message"
+                name="msg"
                 placeholder="Your message"
                 required
               />
             </div>
-            {/* <div>
-              <div>
-                <h4>Extra Services</h4>
-                <p>Add extra services on your reservation</p>
-              </div>
-              <div>
-                <input type="checkbox" />
-                <input type="checkbox" />
-              </div>
-            </div> */}
-            <button className="btn booking-btn" type="submit">
-              Book Now
-            </button>
-            {wasSubmitted && <h2>Thanks for Booking {touristName}! </h2>}
-          </form>
+
+            {user ? (
+              <button
+                className="btn booking-btn"
+                type="submit"
+                onClick={handleSubmit}
+              >
+                Book Now
+              </button>
+            ) : (
+              <Link to="/login" className="btn booking-btn" type="submit">
+                Login to Book
+              </Link>
+            )}
+          </Form>
         </div>
       </section>
     </>

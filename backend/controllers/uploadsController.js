@@ -3,9 +3,9 @@ const { StatusCodes } = require("http-status-codes");
 const NotFoundError = require("../error");
 const CustomAPIError = require("../error");
 const fs = require("fs");
-const travelPackage = require("../models/travelPackage");
+// const travelPackage = require("../models/travelPackage");
 
-const uploadtravelPackageImage = async (req, res) => {
+const uploadTravelPackageImage = async (req, res) => {
   if (!req.files) {
     throw new NotFoundError(`No file uploaded`);
   }
@@ -22,6 +22,8 @@ const uploadtravelPackageImage = async (req, res) => {
     throw new CustomAPIError("Please upload Image small than 1KB");
   }
 
+  // console.log(req.files);
+
   const imagePath = path.join(
     __dirname,
     "../public/uploads" + `${travelPackageImage.name}`
@@ -35,5 +37,5 @@ const uploadtravelPackageImage = async (req, res) => {
 };
 
 module.exports = {
-  uploadtravelPackageImage,
+  uploadTravelPackageImage,
 };

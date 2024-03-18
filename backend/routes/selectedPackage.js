@@ -8,9 +8,13 @@ const {
   deleteSelectedPackage,
 } = require("../controllers/selectedPackageController");
 
+const uploadTravelPackageImage = require("../controllers/uploadsController");
+
 router.get("/", getSelectedPackagesForUser);
 router.post("/", createSelectedPackage);
 router.patch("/:id", updateSelectedPackage);
 router.delete("/:id", deleteSelectedPackage);
+
+// router.post("/uploads", uploadTravelPackageImage);
 
 module.exports = router;

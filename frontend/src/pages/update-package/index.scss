@@ -1,0 +1,87 @@
+.modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-block: 3rem;
+}
+
+.update-form {
+  width: 25rem;
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 5px;
+  box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.1);
+}
+
+.editBooking-form {
+  //   background-color: #fff;
+  //   box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  border-radius: 15px;
+  // outline: 1px solid red;
+
+  &__quote {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e4e4e4;
+  }
+
+  &__price {
+    font-size: 2rem;
+    font-weight: 700;
+  }
+
+  &__range {
+    display: flex;
+    flex-direction: column;
+
+    span {
+      font-weight: 700;
+      font-size: 1.4rem;
+    }
+  }
+
+  &__title {
+    display: flex;
+    padding-block: 1.3rem;
+    justify-content: space-around;
+    align-items: center;
+    border-bottom: 1px solid #e4e4e4;
+
+    &_divide {
+      height: 25px;
+      width: 1.6px;
+      background-color: #e4e4e4;
+    }
+
+    .id {
+      color: #06a6e3;
+    }
+  }
+}
+
+.formgroup {
+  padding-block: 1.3rem;
+  border-bottom: 1px solid #e4e4e4;
+}
+
+input {
+  width: 100%;
+  padding-block: 0.85rem;
+  padding-inline: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid #e4e4e4;
+}
+
+textarea {
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid #e4e4e4;
+}
+
+.booking-btn {
+  width: 100%;
+  margin-bottom: 1rem;
+}

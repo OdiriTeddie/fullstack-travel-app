@@ -22,36 +22,32 @@ const getSelectedPackagesForUser = async (req, res) => {
   const selectedPackages = await SelectedPackage.find({ userId }).populate(
     "packageId"
   );
-  console.log(selectedPackages);
-  //   const selectedPackages = await SelectedPackage.findOne({
-  //     userId: userId,
-  //     packageId: packageId,
-  //   });
+
   res.status(StatusCodes.OK).json(selectedPackages);
 };
 
 const updateSelectedPackage = async (req, res) => {
-  console.log(req.body);
-  const { msg, date, packageId } = req.body;
+  const { msg, date } = req.body;
   const { id } = req.params;
   const { userId } = req.user;
 
   if (msg === "" || date === "") {
     throw new BadRequestError("msg or date fields cannot be empty");
   }
+
+  const updateFields = { msg, date };
   const selectedPackage = await SelectedPackage.findByIdAndUpdate(
     {
       _id: id,
       userId: userId,
     },
-    req.body,
+    updateFields,
     { new: true }
   );
   if (!selectedPackage) {
     throw new NotFoundError(`No travel package with id ${id}`);
   }
   res.status(StatusCodes.OK).json({ selectedPackage });
-  //   res.send("Update user selected packages");
 };
 
 const deleteSelectedPackage = async (req, res) => {
@@ -65,7 +61,6 @@ const deleteSelectedPackage = async (req, res) => {
     throw new NotFoundError(`No Travel Package with id ${id}`);
   }
   res.status(StatusCodes.OK).send();
-  //   res.send("Delete user selected package");
 };
 
 module.exports = {

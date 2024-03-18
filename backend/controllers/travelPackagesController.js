@@ -1,22 +1,26 @@
 const { StatusCodes } = require("http-status-codes");
-const { NotFoundError } = require("../error");
+const { NotFoundError, BadRequestError } = require("../error");
 const TravelPackage = require("../models/travelPackage");
+const path = require("path");
 
 const getAllTravelPackages = async (req, res) => {
   const { search, country, activities } = req.query;
   const queryObject = {};
 
   if (search) {
-    queryObject.packageName = { $regex: search, $options: "i" };
+    queryObject.$or = [
+      { name: { $regex: search, $options: "i" } },
+      { country: { $regex: search, $options: "i" } },
+    ];
   }
 
-  if (country && country !== "all") {
-    queryObject.country = country;
-  }
+  // if (country && country !== "all") {
+  //   queryObject.country = country;
+  // }
 
-  if (activities && acitivities !== "all") {
-    queryObject.activities = activities;
-  }
+  // if (activities && acitivities !== "all") {
+  //   queryObject.activities = activities;
+  // }
 
   let result = TravelPackage.find(queryObject);
 
@@ -84,10 +88,35 @@ const deleteTravelPackage = async (req, res) => {
   res.status(StatusCodes.OK).json({ travelPackage });
 };
 
+const uploadImage = async (req, res) => {
+  if (!req.files) {
+    throw new BadRequestError("No File Uploaded");
+  }
+  const productImage = req.files.image;
+
+  if (!productImage.mimetype.startsWith("image")) {
+    throw new BadRequestError("Please upload Image");
+  }
+  const maxSize = 1024 * 1024;
+
+  if (productImage.size > maxSize) {
+    throw new BadRequestError("Please upload Image smaller than 1MB");
+  }
+
+  const imagePath = path.join(
+    __dirname,
+    "../public/uploads/" + `${productImage.name}`
+  );
+
+  await productImage.mv(imagePath);
+  res.status(StatusCodes.OK).json({ image: `/uploads/${productImage.name}` });
+};
+
 module.exports = {
   getAllTravelPackages,
   getTravelPackage,
   createTravelPackage,
   updateTravelPackage,
   deleteTravelPackage,
+  uploadImage,
 };

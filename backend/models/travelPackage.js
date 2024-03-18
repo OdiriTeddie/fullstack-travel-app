@@ -39,6 +39,11 @@ const TravelPackageSchema = new mongoose.Schema({
     required: [true, "Please provide a detailed description for the package"],
     maxlength: 2000,
   },
+  image: {
+    type: String,
+    required: [true, "Please provide an image"],
+    default: "/uploads/example.jpg",
+  },
 });
 
 module.exports = mongoose.model("travelPackage", TravelPackageSchema);

@@ -1,5 +1,6 @@
 .header {
   padding-block: 1.5rem;
+  border-bottom: 1px solid #afafaf70;
   .container {
     display: flex;
     flex-direction: column;
@@ -17,6 +18,10 @@
   width: 15rem;
 }
 
+.logout-btn {
+  padding: 0.4em 1em;
+}
+
 @media (min-width: 756px) {
   .header {
     .container {
@@ -24,6 +29,17 @@
     }
     .search-btn {
       display: block;
+    }
+  }
+
+  .logout-wrapper {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+
+    .dashboard-link {
+      font-weight: bold;
+      text-decoration: underline;
     }
   }
 }

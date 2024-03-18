@@ -1,0 +1,19 @@
+.dashboard {
+  padding-block: 4rem;
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  &__header {
+    border-bottom: 2px solid #06a6e3;
+
+    h1 {
+      padding-block: 1rem;
+      font-size: 2rem;
+      text-transform: capitalize;
+    }
+  }
+}
