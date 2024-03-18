@@ -11,8 +11,8 @@ export const loader = async () => {
     return { packages };
   } catch (error) {
     console.log(error);
-    return null;
   }
+  return null;
 };
 
 export const PlanTrip = () => {
