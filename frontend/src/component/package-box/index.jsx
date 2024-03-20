@@ -37,5 +37,5 @@ PackageBox.propTypes = {
   city: PropTypes.string,
   country: PropTypes.string,
   summary: PropTypes.string,
-  price: PropTypes.string,
+  price: PropTypes.number,
 };

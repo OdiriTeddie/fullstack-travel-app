@@ -5,13 +5,38 @@ import { customFetch } from "../../utils";
 import { MainPackageBox } from "../../component";
 import { Form, useLoaderData } from "react-router-dom";
 
+// export const loader = async ({ request }) => {
+//   const params = Object.fromEntries([
+//     ...new URL(request.url).searchParams.entries(),
+//   ]);
+//   console.log(params);
+//   try {
+//     const response = await customFetch.get("/packages", { params });
+//     const packages = response.data.travelPackages;
+//     const totalTravelPackages = response.data.totalTravelPackages;
+//     return { packages, totalTravelPackages };
+//   } catch (error) {
+//     console.log(error);
+//     return null;
+//   }
+// };
+
 export const loader = async ({ request }) => {
-  const params = Object.fromEntries([
+  let params = Object.fromEntries([
     ...new URL(request.url).searchParams.entries(),
   ]);
   console.log(params);
+
   try {
-    const response = await customFetch.get("/packages", { params });
+    let response;
+    if (Object.keys(params).length === 0) {
+      // If params object is empty, send request without parameters
+      response = await customFetch.get("/packages");
+    } else {
+      // If params object is not empty, send request with parameters
+      response = await customFetch.get("/packages", { params });
+    }
+
     const packages = response.data.travelPackages;
     const totalTravelPackages = response.data.totalTravelPackages;
     return { packages, totalTravelPackages };
@@ -59,6 +84,7 @@ export default function Packages() {
           </Form>
           <h2> Total Travel Packages: {totalTravelPackages}</h2>
         </div>
+
         <div className="container package__list">{mappedPackages}</div>
       </section>
     </>

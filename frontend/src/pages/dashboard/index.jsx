@@ -1,6 +1,6 @@
 import "./index.scss";
 import { SelectedPackageBox } from "../../component";
-import { redirect, useLoaderData } from "react-router-dom";
+import { Link, redirect, useLoaderData } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { customFetch } from "../../utils";
@@ -65,13 +65,26 @@ export default function Dashboard() {
       />
     );
   });
+  console.log(displaySelectedPackages.length);
+
   return (
     <section className="dashboard">
       <div className="container">
         <div className="dashboard__header">
           <h1>Welcome, {user.name}</h1>
         </div>
-        <div className="selectedPackage__list">{displaySelectedPackages}</div>
+        <div className="selectedPackage__list">
+          {displaySelectedPackages.length === 0 ? (
+            <div className="empty">
+              <h4>Sorry, no packages yet, please book a travel package </h4>
+              <Link to="/packages" className="btn">
+                Packages
+              </Link>{" "}
+            </div>
+          ) : (
+            displaySelectedPackages
+          )}
+        </div>
       </div>
     </section>
   );

@@ -50,7 +50,7 @@ export default function UpdatePackage() {
   const editDate = day(date).format("YYYY-MM-DD");
 
   return (
-    <section className="modal">
+    <section className="modal container">
       <div className="update-form">
         <Form className="editBooking-form" method="POST">
           <div className="editBooking-form__quote">
@@ -68,7 +68,7 @@ export default function UpdatePackage() {
           <div className="formgroup"></div>
           <div className="formgroup">
             <textarea
-              rows="3"
+              rows="5"
               cols="15"
               name="msg"
               placeholder="Your message"

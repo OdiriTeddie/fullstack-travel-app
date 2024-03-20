@@ -22,6 +22,17 @@
   padding: 0.4em 1em;
 }
 
+.logout-wrapper {
+  display: flex;
+  gap: 1.3rem;
+  align-items: center;
+
+  .dashboard-link {
+    font-weight: bold;
+    text-decoration: underline;
+  }
+}
+
 @media (min-width: 756px) {
   .header {
     .container {
@@ -33,13 +44,6 @@
   }
 
   .logout-wrapper {
-    display: flex;
     gap: 2rem;
-    align-items: center;
-
-    .dashboard-link {
-      font-weight: bold;
-      text-decoration: underline;
-    }
   }
 }
