@@ -8,10 +8,10 @@
     justify-content: space-between;
     align-items: center;
   }
+}
 
-  .search-btn {
-    display: none;
-  }
+.search-btn {
+  padding-inline: 1em;
 }
 
 .logo {
@@ -38,12 +38,13 @@
     .container {
       flex-direction: row;
     }
-    .search-btn {
-      display: block;
-    }
   }
 
   .logout-wrapper {
     gap: 2rem;
+  }
+
+  .search-btn {
+    padding-inline: 2em;
   }
 }
