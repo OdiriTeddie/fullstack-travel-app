@@ -3,14 +3,14 @@ import { Link } from "react-router-dom";
 import { PackageBox } from "../package-box";
 import { useLoaderData } from "react-router-dom";
 import { customFetch } from "../../utils";
-
+import { toast } from "react-toastify";
 export const loader = async () => {
   try {
     const response = await customFetch.get("/packages");
     const packages = response.data.travelPackages;
     return { packages };
   } catch (error) {
-    console.log(error);
+    toast.error("no packages");
   }
   return null;
 };
@@ -19,6 +19,8 @@ export const PlanTrip = () => {
   const { packages } = useLoaderData();
 
   const limitedList = packages.slice(0, 3);
+
+  console.log(limitedList);
 
   const mappedPackages = limitedList?.map((travelPackage) => {
     const {
@@ -39,10 +41,11 @@ export const PlanTrip = () => {
         price={price}
         summary={shortDescription}
         image={image}
-        links={`/packages/${name}`}
+        link={`/packages/${name}`}
       />
     );
   });
+
   return (
     <section className="plan-trip">
       <div className="container">

@@ -36,7 +36,7 @@ export const action =
       localStorage.removeItem("editData");
       return redirectDocument("/dashboard");
     } catch (error) {
-      console.log(error);
+      toast.error("Could not update package");
     }
     return null;
   };

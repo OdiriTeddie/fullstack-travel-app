@@ -2,7 +2,7 @@ import { FaMapMarkerAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
-export const PackageBox = ({ image, city, country, summary, price }) => {
+export const PackageBox = ({ image, city, country, summary, price, link }) => {
   return (
     <div className="travel-box">
       <div className="travel-box__img">
@@ -20,7 +20,7 @@ export const PackageBox = ({ image, city, country, summary, price }) => {
           <p>{summary}</p>
         </div>
         <div className="travel-box__footer">
-          <Link to="/packages/miami" className="btn">
+          <Link to={link} className="btn">
             Details
           </Link>
           <div className="travel-box__quote">
@@ -38,4 +38,5 @@ PackageBox.propTypes = {
   country: PropTypes.string,
   summary: PropTypes.string,
   price: PropTypes.number,
+  link: PropTypes.string,
 };
